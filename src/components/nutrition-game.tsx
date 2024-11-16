@@ -3,6 +3,26 @@
 import React, { useState } from 'react';
 import { Star, RotateCcw } from 'lucide-react';
 
+interface Label {
+  servingSize: string;
+  calories: number;
+  servingsPerContainer?: number;
+  fat?: string;
+  protein?: string;
+  sugar?: string;
+  totalFat?: string;
+  dailyValueProtein?: string;
+  dailyValueSugar?: string;
+}
+
+interface Level {
+  question: string;
+  label: Label;
+  options: (string | number)[];
+  correct: string | number;
+  hint: string;
+}
+
 const NutritionGame = () => {
   const [currentLevel, setCurrentLevel] = useState(0);
   const [score, setScore] = useState(0);
@@ -11,7 +31,7 @@ const NutritionGame = () => {
   const [answeredCorrectly, setAnsweredCorrectly] = useState<Set<number>>(new Set());
   const [gameCompleted, setGameCompleted] = useState(false);
 
-  const levels = [
+  const levels: Level[] = [
     {
       question: "Find the total Calories in this snack!",
       label: {
@@ -84,7 +104,7 @@ const NutritionGame = () => {
     setGameCompleted(false);
   };
 
-  const handleAnswer = (answer: any) => {
+  const handleAnswer = (answer: string | number) => {
     const isAnswerCorrect = answer === levels[currentLevel].correct;
     setIsCorrect(isAnswerCorrect);
     setShowFeedback(true);
